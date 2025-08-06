@@ -41,7 +41,7 @@
 
 <div class="container">
   <mat-card class="left">
-    <app-helper-list [helperUsers]="helperUsers" (selectedHelper)="onSelectedHelper($event)"></app-helper-list>
+    <app-helper-list [helperUsers]="helperUsers" [selectedHelper]="selectedHelper" (selectedHelperEmit)="onSelectedHelper($event)"></app-helper-list>
   </mat-card>
   <mat-card class="right">
     <app-helper-detail [helper]="selectedHelper"></app-helper-detail>

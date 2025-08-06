@@ -12,11 +12,12 @@ import { HelpersService } from '../../services/helpers.service';
   styleUrl: './helper-list.component.scss'
 })
 export class HelperListComponent {
+  @Input() selectedHelper?: HelperUser;
   @Input() helperUsers: HelperUser[] = [];
-  @Output() selectedHelper = new EventEmitter<HelperUser>();
+  @Output() selectedHelperEmit = new EventEmitter<HelperUser>();
   constructor(private HelperService: HelpersService){} 
   onSelect(helper : HelperUser){
-    this.selectedHelper.emit(helper);
+    this.selectedHelperEmit.emit(helper);
   }
   getPhotoUrl(helper : HelperUser): string{
     if(typeof helper?.photo === 'string'){

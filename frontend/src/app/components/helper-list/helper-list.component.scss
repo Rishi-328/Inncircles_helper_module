@@ -9,6 +9,9 @@
   &:hover {
     background-color: #f0f0f0;
   }
+  &.active{
+    background-color: #e0e0e0;
+  }
 
   .avatar {
     width: 48px;
