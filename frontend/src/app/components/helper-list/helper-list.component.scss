@@ -1,0 +1,41 @@
+.helper-item {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  padding: 10px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+  &:hover {
+    background-color: #f0f0f0;
+  }
+
+  .avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 16px;
+    border: 2px solid #e0e0e0;
+    background-color: #fff;
+  }
+
+  .details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    .helper-name {
+      font-size: 16px;
+      font-weight: 600;
+      color: #212121;
+      margin: 0;
+    }
+
+    .helper-role {
+      font-size: 14px;
+      color: #757575;
+      margin-top: 2px;
+    }
+  }
+}

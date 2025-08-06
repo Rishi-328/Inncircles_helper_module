@@ -1,0 +1,16 @@
+<mat-form-field appearance="outline" class="filter-field">
+    <mat-label>{{label}}</mat-label>
+    <mat-select multiple [formControl]="control">
+        <mat-select-trigger>
+        {{control.value?.[0] || ''}}
+        @if ((control.value?.length || 0) > 1) {
+            <span class="example-additional-selection">
+            (+{{(control.value?.length || 0) - 1}})
+            </span>
+        }
+        </mat-select-trigger>
+        <mat-option *ngFor="let type of options" [value]="type">
+        {{ type }}
+        </mat-option>
+    </mat-select> 
+</mat-form-field>

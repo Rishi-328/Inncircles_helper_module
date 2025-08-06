@@ -1,0 +1,156 @@
+mat-form-field {
+  width: 100%;
+  margin-bottom: 1.5rem;
+  
+}
+mat-card{
+  width: 70%;
+}
+.upload-photo-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 2rem;
+
+  .upload-circle {
+    width: 120px;
+    height: 120px;
+    border: 2px dashed #b5a9fc;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #7e6dc3;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  .uploaded-image{
+    object-fit: cover;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    margin-top: 1rem;
+    border: 2px solid #b5a9fc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+  }
+
+  p {
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+    color: #999;
+  }
+}
+
+.gender-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  display: block;
+  color: #999;
+
+}
+
+.gender-options {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.btn-container {
+  margin-top: 2rem;
+  text-align: right;
+  display: flex;
+  gap: 2rem;
+  justify-content: flex-end;
+}
+
+.stepper-container {
+  max-width: 800px;
+  margin: 0 auto;
+  display: inline;
+  justify-content: center;
+  align-items: center;
+  
+  .form-content{
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: auto;
+  }
+}
+
+.upload-container {
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  margin-left: 1rem;
+  gap:5px;
+
+  .upload-placeholder {
+    .plus-icon {
+      width: 120px;
+      height: 100px;
+      font-size: 32px;
+      border: 2px dashed #a0a0ff;
+      background-color: #f4f6ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border-radius: 8px;
+    }
+  }
+  .file-preview {
+  display: flex;
+  align-items: center;
+  margin-top: 8px;
+  &:hover{
+    cursor: pointer;
+  }
+
+  .pdf-box {
+    background-color: #f5f5f5;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 8px 12px;
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+
+    .file-details {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+
+      .file-name {
+        font-size: 14px;
+        font-weight: 500;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .file-size {
+        font-size: 12px;
+        color: #666;
+        margin-top: 2px;
+      }
+    }
+  }
+}
+
+  .p{
+      color:#999;
+    }
+}
+.back-button{
+  color: black;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  margin: 1rem;
+  font-weight: bold;
+}

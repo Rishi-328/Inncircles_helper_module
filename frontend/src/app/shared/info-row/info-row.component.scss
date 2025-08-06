@@ -1,0 +1,12 @@
+.info-row {
+  display: flex;
+
+  .label,
+  .value {
+    flex: 1; 
+  }
+
+  .label {
+    color: #a69f9f;
+  }
+}

@@ -1,0 +1,47 @@
+.full-width {
+  width: 100%;
+}
+
+.hint {
+  font-size: 13px;
+  color: #666;
+  margin: 10px 0;
+}
+
+.upload-box {
+  margin-top: 10px;
+  height: 130px;
+  border: 2px dashed #9a81f2;
+  border-radius: 10px;
+  background: #f5f3ff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  transition: background 0.3s ease;
+}
+
+.upload-box:hover {
+  background: #ede9fe;
+}
+
+.upload-content mat-icon {
+  font-size: 40px;
+}
+
+.click-text {
+  color: #6a5acd;
+  font-weight: 500;
+}
+
+.file-preview {
+  display: flex;
+  align-items: center;
+  margin-top: 12px;
+  gap: 10px;
+}
+
+.file-icon {
+  font-size: 28px;
+}

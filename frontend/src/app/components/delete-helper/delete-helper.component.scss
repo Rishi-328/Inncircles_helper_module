@@ -1,0 +1,57 @@
+h2{
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    height: 35px;
+    margin: 0;
+    mat-icon{
+        margin-right: 10px;
+        &:hover{
+            cursor: pointer;
+        }
+    }
+}
+.dialog-content{
+    padding: 10px 24px 10px 24px !important;
+    height: 150px;
+    width: 300px;
+    .warning,span {
+        color: #d32f2f;
+        font-weight: 500;
+    }
+    mat-hint{
+        font-size: 0.75rem;
+        color: #757575;
+        margin-top: 8px;
+        display: block;
+    }
+    mat-divider{
+        margin: 10px 0;
+    }
+}
+mat-dialog-actions{
+    display: flex;
+    justify-content: end;
+    gap: 10px;
+    button{
+        min-width: 60;
+        min-height: 30px;
+        border-radius:10%;
+        &:hover{
+            cursor: pointer;
+        }
+    }
+    .cancel{
+        background-color: white;
+        border-radius: 10%;
+        border: 1px solid #ccc;
+
+    }
+    .delete{
+        color: white;
+        background-color: rgb(220, 80, 80);
+        border: none;
+        display: flex;
+        align-items: center;
+    }
+}

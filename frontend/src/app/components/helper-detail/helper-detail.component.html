@@ -1,0 +1,43 @@
+<div class="details-pane" *ngIf="helper">
+  <div class="header">
+    <img [src]="helper.photo?getPhotoUrl():'https://ui-avatars.com/api/?name='+helper.fullName+'&background=random&color=fff&rounded=true&length=2'" alt="Helper Profile" class="avatar">
+    <div class="info">
+      <div class="helper-name">{{ helper.fullName }}</div>
+      <div class="helper-role">{{ helper.typeOfService }}</div>
+    </div>
+    <span class="actions">
+      <button mat-icon-button (click)="editHelper()"><mat-icon>edit</mat-icon></button>
+      <button mat-icon-button (click)="deleteHelper()"><mat-icon>delete</mat-icon></button>
+    </span>
+  </div>
+
+  <div class="info-section">
+    <app-divider text="EMPLOYEE ID"></app-divider>
+    <div class="file-preview">
+        <span class="label">Identification Card</span>
+        <a class="view-link" [href]="helper.kycDocument" target="_blank" rel="noopener noreferrer">
+            <mat-icon class="view-icon">visibility</mat-icon>
+            View
+        </a>
+    </div>
+    <app-info-row label="Employee Code" [value]="helper.employeeId"></app-info-row>
+
+    <app-divider text="PERSONAL DETAILS"></app-divider>
+    <app-info-row label="Gender" [value]="helper.gender"></app-info-row>
+    <app-info-row label="Language" [value]="helper.languages"></app-info-row>
+    <app-info-row label="Mobile" [value]="helper.phone"></app-info-row>
+    <app-info-row label="Email" [value]="helper.email || '-'"></app-info-row>
+    <div class="file-preview">
+        <span class="label">KYC Document</span>
+        <a class="view-link" [href]="helper.kycDocument" target="_blank" rel="noopener noreferrer">
+            <mat-icon class="view-icon">visibility</mat-icon>
+            View
+        </a>
+    </div>
+
+    <app-divider text="SERVICE DETAILS"></app-divider>
+    <app-info-row label="Type" [value]="helper.typeOfService"></app-info-row>
+    <app-info-row label="Organization" [value]="helper.organizationName"></app-info-row>
+    <app-info-row label="Joined On" [value]="helper.joinedOn | date: 'dd, MMM, yyyy'"></app-info-row>
+  </div>
+</div>

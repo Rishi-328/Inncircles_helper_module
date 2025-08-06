@@ -1,0 +1,19 @@
+.divider {
+  display: flex;
+  align-items: center;
+  margin: 1rem 0;
+
+  .divider-text {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 0.6);
+    white-space: nowrap;
+    margin-right: 0.75rem;
+  }
+
+  .divider-line {
+    flex-grow: 1;
+    height: 1px;
+    background-color: #e0e0e0;
+  }
+}

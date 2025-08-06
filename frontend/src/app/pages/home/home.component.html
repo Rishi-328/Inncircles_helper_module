@@ -1,0 +1,49 @@
+<nav>
+  <mat-toolbar color="light">
+    <span>Helpers</span>
+  </mat-toolbar>
+</nav>
+<div class="sidebar">
+  <div class="search-bar">
+    <button matIconButton [matMenuTriggerFor]="sort" class="list-icon">
+      <mat-icon>swap_vert</mat-icon>
+    </button>
+    <mat-menu #sort="matMenu">
+      <button mat-menu-item (click)="onSortChange('fullName')">Helpers Name(A-Z)</button>
+      <button mat-menu-item (click)="onSortChange('employeeId')">Employee ID</button>
+    </mat-menu>
+    <button matIconButton (click)="showFilter = !showFilter" class="list-icon">
+      <mat-icon>filter_list</mat-icon>
+    </button>
+    <div class="filter">
+      <mat-card *ngIf="showFilter" class="filter-card">
+      <h3>Filter By</h3>
+
+      <app-filter-multiselect [label]="'Service'" [options]="serviceTypes" [control]="service" [iconMap]="iconMap"></app-filter-multiselect>
+
+      <app-filter-multiselect [label]="'Organization'" [options]="Organization" [control]="org"></app-filter-multiselect>
+
+      <div class="filter-btns">
+        <button mat-raised-button color="primary" (click)="resetFilter()">Reset</button>
+        <button mat-raised-button color="primary" (click)="applyFilter()">Apply</button>
+      </div>
+    </mat-card>
+    </div>
+
+    <mat-form-field appearance="outline" class="search-input">
+      <mat-label>Search</mat-label>
+      <input matInput placeholder="Name, Employee ID, Phone" [(ngModel)]="searchTerm" name="search" (ngModelChange)="getHelperUsers()" type="search"/>
+    </mat-form-field>
+    <mat-hint>{{helperUsers.length}} of {{totalCount}} results</mat-hint>
+  </div>
+  <button mat-raised-button color="primary" class="add-btn" (click)="navigateToAddHelper()">+ Add Helper</button>
+</div>
+
+<div class="container">
+  <mat-card class="left">
+    <app-helper-list [helperUsers]="helperUsers" (selectedHelper)="onSelectedHelper($event)"></app-helper-list>
+  </mat-card>
+  <mat-card class="right">
+    <app-helper-detail [helper]="selectedHelper"></app-helper-detail>
+  </mat-card>
+</div>

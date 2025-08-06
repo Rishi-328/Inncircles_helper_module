@@ -1,0 +1,32 @@
+<div class="details-pane" *ngIf="helperForm">
+  <div class="header">
+    <mat-icon matListItemIcon class="avatar">{{ helperForm.get('fullName')?.value[0] | uppercase }}</mat-icon>
+    <div class="info">
+      <div class="helper-name">{{ helperForm.get('fullName')?.value }}</div>
+<div class="helper-role">{{ helperForm.get('typeOfService')?.value }}</div>
+
+    </div>
+  </div>
+
+  <div class="info-section">
+
+    <app-divider text="PERSONAL DETAILS"></app-divider>
+    <app-info-row label="Gender" [value]="helperForm.get('gender')?.value"></app-info-row>
+    <app-info-row label="Language" [value]="helperForm.get('languages')?.value?.join(', ')"></app-info-row>
+    <app-info-row label="Mobile No." [value]="helperForm.get('phone')?.value"></app-info-row>
+    <app-info-row label="Email ID" [value]="helperForm.get('email')?.value || '-'"></app-info-row>
+    <div class="kyc-preview">
+        <span class="label">KYC Document</span>
+        <a class="view-link" *ngIf="kycFileUrl" [href]="kycFileUrl" target="_blank" rel="noopener noreferrer">
+            <mat-icon class="view-icon">visibility</mat-icon>
+            View
+        </a>
+    </div>
+
+    <app-divider text="SERVICE DETAILS"></app-divider>
+    <app-info-row label="Type" [value]="helperForm.get('typeOfService')?.value"></app-info-row>
+    <app-info-row label="Organization" [value]="helperForm.get('organizationName')?.value"></app-info-row>
+    <app-info-row label="Joined On" [value]="helperForm.get('joinedOn')?.value"></app-info-row>
+
+  </div>
+</div>

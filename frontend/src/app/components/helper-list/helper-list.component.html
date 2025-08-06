@@ -1,0 +1,10 @@
+<mat-nav-list>
+  <div mat-subheader>Helpers</div>
+  <div *ngFor="let helper of helperUsers" (click)="onSelect(helper)" class="helper-item" > 
+    <img [src]="helper.photo?getPhotoUrl(helper):'https://ui-avatars.com/api/?name='+helper.fullName+'&background=random&color=fff&rounded=true&length=2'" alt="Helper Profile" class="avatar">
+    <div class="details">
+      <div class="helper-name">{{ helper.fullName }}</div>
+      <div class="helper-role">{{ helper.typeOfService }}</div>
+    </div>
+  </div>
+</mat-nav-list>

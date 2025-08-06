@@ -1,0 +1,37 @@
+
+<h2 mat-dialog-title>Upload KYC Documents</h2>
+<mat-dialog-content>
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Select Document Type</mat-label>
+    <mat-select [(value)]="documentType">
+      <mat-option *ngFor="let type of documentTypes" [value]="type">
+        {{ type }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <div
+    class="upload-box"
+    (click)="fileInput.click()"
+    (drop)="onDrop($event)"
+    (dragover)="onDragOver($event)"
+  >
+    <input type="file" hidden (change)="onFileSelected($event)" #fileInput>
+    <div class="upload-content">
+      <p><span class="click-text">Click to upload</span> or drag and drop</p>
+    </div>
+  </div>
+
+  <div *ngIf="uploadedFile" class="file-preview">
+    <mat-icon class="file-icon" color="warn">picture_as_pdf</mat-icon>
+    <span>{{uploadedFile.name}}</span>
+    <button mat-icon-button color="warn" (click)="removeFile()">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </div>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-flat-button color="primary" [disabled]="!uploadedFile || !documentType" (click)="onSave()">Save</button>
+</mat-dialog-actions>
