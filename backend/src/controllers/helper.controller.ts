@@ -1,32 +1,47 @@
 import  { Request, Response } from 'express';
-import HelperModel from '../models/helper.model'; // your Mongoose model
-import {getImageName }from '../utils/image-name-extract';
-import {deleteImage} from '../utils/cloudinary.utils'; // utility function to delete image from Cloudinary
+import HelperModel from '../models/helper.model'; 
+import {getImageName }from '../utils/ExtractImageName';
+import {deleteImage, uploadImage} from '../utils/cloudinary.utils'; 
+import { getNextId } from '../utils/getNextId';
 
 export const createHelper = async (req: Request, res: Response) => {
+  let cleanUpUrls: string[] = [];
   try {
     const files = req.files as {
-      [fieldname: string]: Express.Multer.File[];
-    };
-    const photoUrl = files['photo']?.[0]?.path || null;
-    const kycUrl = files['kycDocument']?.[0]?.path || null;
-    const additionalUrl = files['additionalDocuments']?.[0]?.path || null;
-    const length = await HelperModel.countDocuments({});
-    const helper = await HelperModel.create({
-      ...req.body,
-      employeeId: length + 1,
-      photo: photoUrl,
-      kycDocument: kycUrl,
-      additionalDocuments: additionalUrl,
-    });
+      [fiedname: string]: Express.Multer.File[];
+    }
+    const fileNames = ['photo','kycDocument','additionalDocuments'];
+    for(const field of fileNames){
+      const file = files?.[field]?.[0];
+      if(file){
+        const public_id = `${field}-${Date.now()}`;
+        const result = await uploadImage(file,public_id);
+        req.body[field] = result.secure_url;
+        cleanUpUrls.push(public_id);
+      }
+    }
+    await getNextId('employeeId')
+      .then((id)=>{
+        req.body.employeeId = id;
+      })
+      .catch(error =>{
+        console.error('Error in generating employeeId: ',error);
+      })
+    const newHelper = new HelperModel(req.body);
+    await newHelper.save();
+      
     res.status(201).json({
-        fullName : helper.fullName,
-        typeOfService: helper.typeOfService,
-        employeeId : helper.employeeId,
+        fullName : newHelper.fullName,
+        typeOfService: newHelper.typeOfService,
+        employeeId : newHelper.employeeId,
 
     });
   } catch (error) {
     res.status(500).json({ message: 'Upload failed', error });
+    for(const public_id of cleanUpUrls){
+      deleteImage(public_id);
+    }
+
   }
 };
 
@@ -109,10 +124,6 @@ export const deleteHelper = async (req: Request, res: Response)=>{
     if(helper){   
       res.status(200).json({message: `Deleted ${helper.fullName}`});   
     }
-    else{
-      res.status(404).json({message: 'Helper not found'});
-    }    
-
   }catch(error){
     res.status(500).json({message: 'Failed to delete helper', error});
   }
@@ -124,14 +135,24 @@ export const updateHelper = async (req: Request, res: Response) => {
     const files = req.files as {
       [fieldname: string]: Express.Multer.File[];
     }
-    const photoUrl = files['photo']?.[0]?.path || null;
-    const kycUrl = files['kycDocument']?.[0]?.path || null;
-    const additionalUrl = files['additionalDocuments']?.[0]?.path || null;
-    const updateData = {
-      ...req.body,
-      photo: photoUrl || req.body.photo,
-      kycDocument: kycUrl || req.body.kycDocument,
-      additionalDocuments: additionalUrl || req.body.additionalDocuments,
+    const updateData = {...req.body};
+    const fileNames = ['photo', 'kycDocument', 'additionalDocuments'];
+    for(const field of fileNames){
+      const file = files?.[field]?.[0];
+      if(file){
+        const data = await HelperModel.findOne<{[key:string]:string}>({employeeId: +id},{_id : 0, [field]: 1});
+        if (data?.[field]) {
+          deleteImage(getImageName(data[field])); 
+        }
+        const public_id = `${field}-${Date.now()}`;
+        const result = await uploadImage(file,public_id);
+        updateData[field] = result.secure_url;
+      }else{
+        if(req.body[field]){
+          updateData[field] = req.body[field];
+        }
+      }
+
     }
     const helper = await HelperModel.findOneAndUpdate({ employeeId: +id },updateData,{ new: true });
     if (helper) {

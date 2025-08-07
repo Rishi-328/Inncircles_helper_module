@@ -3,7 +3,8 @@ import mongoose ,{Schema} from "mongoose";
 const helperSchema = new Schema({
     employeeId:{
         type: Number,
-        required: true
+        required: true,
+        unique: true
     },
     photo: {
         type: String,
