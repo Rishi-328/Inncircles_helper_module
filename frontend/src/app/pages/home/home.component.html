@@ -12,7 +12,7 @@
       <button mat-menu-item (click)="onSortChange('fullName')">Helpers Name(A-Z)</button>
       <button mat-menu-item (click)="onSortChange('employeeId')">Employee ID</button>
     </mat-menu>
-    <button matIconButton (click)="showFilter = !showFilter" class="list-icon">
+    <button matIconButton matButton="elevated" (click)="showFilter = !showFilter" class="list-icon" matBadge="1" matBadgeSize="small" [matBadgeHidden]="hidden">
       <mat-icon>filter_list</mat-icon>
     </button>
     <div class="filter">
@@ -32,7 +32,7 @@
 
     <mat-form-field appearance="outline" class="search-input">
       <mat-label>Search</mat-label>
-      <input matInput placeholder="Name, Employee ID, Phone" [(ngModel)]="searchTerm" name="search" (ngModelChange)="getHelperUsers()" type="search"/>
+      <input matInput placeholder="Name, Employee ID, Phone" [(ngModel)]="searchTerm" name="search" type="search" (ngModelChange)="getHelperUsers()"/>
     </mat-form-field>
     <mat-hint>{{helperUsers.length}} of {{totalCount}} results</mat-hint>
   </div>

@@ -16,7 +16,4 @@ const storage = new CloudinaryStorage({
 
 const upload = multer({ storage: storage});
 export default upload;
-function isPDF(file: Express.Multer.File) {
-    throw new Error('Function not implemented.');
-}
 

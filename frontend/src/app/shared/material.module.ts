@@ -15,7 +15,7 @@ import { MatStepperModule} from '@angular/material/stepper';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatMenuModule } from '@angular/material/menu';
-
+import {MatBadgeModule} from '@angular/material/badge';
 
 const materialModules = [
   MatCardModule,
@@ -37,7 +37,8 @@ const materialModules = [
   MatStepperModule,
   MatCheckboxModule,
   MatDialogModule,
-  MatMenuModule
+  MatMenuModule,
+  MatBadgeModule
 ];
 
 @NgModule({

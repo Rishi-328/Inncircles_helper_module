@@ -1,4 +1,4 @@
-// add-helper.component.ts
+import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { Component, ElementRef, inject, OnInit ,ViewChild} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MaterialModule } from '../../shared/material.module';
@@ -10,11 +10,13 @@ import { ToastService } from '../../services/toast.service';
 import { AddHelperReviewComponent } from '../../components/add-helper-review/add-helper-review.component';
 import { HelpersService } from '../../services/helpers.service';
 import { Router,RouterLink, RouterModule } from '@angular/router';
+import { serviceTypes,Organization,vehicleTypes,languages,iconMap } from '../../models/helper.model';
+import { MatStepperModule } from '@angular/material/stepper';
 
 @Component({
   selector: 'app-add-helper',
   standalone: true,
-  imports: [MaterialModule, CommonModule,KycUploadComponent,AddHelperReviewComponent,RouterModule],
+  imports: [MatStepperModule,MaterialModule, CommonModule,KycUploadComponent,AddHelperReviewComponent,RouterModule],
   templateUrl: './add-helper.component.html',
   styleUrls: ['./add-helper.component.scss']
 })
@@ -26,26 +28,12 @@ export class AddHelperComponent implements OnInit {
   uploadedPhotoUrl: string | null = null;
   selectedPhotoFile: File | null = null;
   photoText: string = 'Upload photo (.png, .jpeg) size 5 mb';
-  isLinear : boolean = true;
-  serviceTypes = ['Maid','Cook','Nurse','Driver'];
-  Organization = ['ASBL', 'Springs Helpers'];
-  vehicleTypes = ['Auto', 'Bike', 'Car', 'None']
+  serviceTypes: string[] = serviceTypes;
+  Organization: string[] = Organization;
+  vehicleTypes: string[] = vehicleTypes;
+  languages: Language[] = languages;
+  iconMap: {[key: string]: string} = iconMap;
 
-  iconMap : {[key : string] : string} = {
-    'Maid': 'cleaning_services',
-    'Cook': 'restaurant',
-    'Nurse': 'local_hospital',
-    'Driver': 'drive_eta'
-  }
-   
-  languages: Language[] = [
-    { value: 'English', label: 'English' },
-    { value: 'Hindi', label: 'Hindi' },
-    { value: 'Telugu', label: 'Telugu' },
-    { value: 'Tamil', label: 'Tamil' },
-    { value: 'Kannada', label: 'Kannada' },
-    { value: 'Malayalam', label: 'Malayalam' },
-  ];
   
   constructor(private fb: FormBuilder,
     private toastService: ToastService,
@@ -149,6 +137,10 @@ export class AddHelperComponent implements OnInit {
         this.helperForm.patchValue({ kycDocumentType: result.type });
       }
     });
+  }
+
+  onStepperSelectionChange(event: StepperSelectionEvent) {
+
   }
   onFormSubmit(){
     if (this.helperForm.invalid) {

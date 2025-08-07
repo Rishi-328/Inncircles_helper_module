@@ -1,5 +1,7 @@
-import { Request, Response } from 'express';
+import  { Request, Response } from 'express';
 import HelperModel from '../models/helper.model'; // your Mongoose model
+import {getImageName }from '../utils/image-name-extract';
+import {deleteImage} from '../utils/cloudinary.utils'; // utility function to delete image from Cloudinary
 
 export const createHelper = async (req: Request, res: Response) => {
   try {
@@ -46,16 +48,14 @@ export const getHelpers = async (req: Request, res: Response) => {
         if(org?.length > 0){
           filter.organizationName = { $in: org }; 
         } 
+        console.log(filter);
         let query = HelperModel.find(filter);
         if(sortBy){
           query = query.sort({[sortBy]:1});
         }
         const helpers = await query;
-        if(helpers.length === 0 && !searchTerm){
-            res.status(404).json({message: 'No helpers found'});
-        }else{
-            res.status(200).json(helpers);
-        }
+        console.log(helpers);
+        res.status(200).json(helpers);
 
     }catch(error){
         res.status(500).json({message: 'Failed to get helpers', error});
@@ -90,6 +90,22 @@ export const deleteHelper = async (req: Request, res: Response)=>{
   try{
     const {id} = req.params;
     const helper = await HelperModel.findOneAndDelete({employeeId: +id});
+    if(!helper){
+      return res.status(404).json({message: 'Helper not found'});
+    }
+    if(helper.photo){
+      const photoName = getImageName(helper.photo);
+      deleteImage(photoName);
+    }
+    if(helper.kycDocument){
+      const kycName = getImageName(helper.kycDocument);
+      deleteImage(kycName);
+    } 
+    if(helper.additionalDocuments){
+      const additionalName = getImageName(helper.additionalDocuments);
+      deleteImage(additionalName);
+    }  
+    
     if(helper){   
       res.status(200).json({message: `Deleted ${helper.fullName}`});   
     }
@@ -107,19 +123,17 @@ export const updateHelper = async (req: Request, res: Response) => {
     const { id } = req.params;
     const files = req.files as {
       [fieldname: string]: Express.Multer.File[];
-    };
+    }
     const photoUrl = files['photo']?.[0]?.path || null;
     const kycUrl = files['kycDocument']?.[0]?.path || null;
     const additionalUrl = files['additionalDocuments']?.[0]?.path || null;
-
     const updateData = {
       ...req.body,
-      photo: photoUrl,
-      kycDocument: kycUrl,
-      additionalDocuments: additionalUrl,
-    };
+      photo: photoUrl || req.body.photo,
+      kycDocument: kycUrl || req.body.kycDocument,
+      additionalDocuments: additionalUrl || req.body.additionalDocuments,
+    }
     const helper = await HelperModel.findOneAndUpdate({ employeeId: +id },updateData,{ new: true });
-
     if (helper) {
       res.status(200).json({ message: 'Changes Saved!'});
     } else {

@@ -3,19 +3,17 @@ import { HelperUser } from './../../models/helper.model';
 import { CommonModule } from '@angular/common';
 import { HelperDetailComponent } from '../../components/helper-detail/helper-detail.component';
 import { HelperListComponent } from '../../components/helper-list/helper-list.component';
-import { MatCardModule } from '@angular/material/card';
 import { MaterialModule } from '../../shared/material.module';
 import { AddHelperComponent } from '../add-helper/add-helper.component';
 import { Router } from '@angular/router'
 import { HelpersService } from '../../services/helpers.service';
 import { FormControl } from '@angular/forms';
 import { serviceTypes,Organization,iconMap } from './../../models/helper.model';
-import { FilterMultiselectComponent } from '../../components/filter-multiselect/filter-multiselect.component';
-
+import { FilterMultiselectComponent } from '../../shared/filter-multiselect/filter-multiselect.component';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule,HelperDetailComponent,HelperListComponent,MaterialModule,AddHelperComponent,FilterMultiselectComponent],
+  imports: [CommonModule,HelperDetailComponent,HelperListComponent,AddHelperComponent,FilterMultiselectComponent,MaterialModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
@@ -34,6 +32,7 @@ export class HomeComponent implements OnInit {
   service = new FormControl<string[]>([]);
   org = new FormControl<string[]>([]);
   showFilter: boolean = false;
+  hidden: boolean = true;
 
   onSelectedHelper(helper: HelperUser){
     this.selectedHelper = helper;
@@ -43,15 +42,14 @@ export class HomeComponent implements OnInit {
   }
   getHelperUsers() {
     this.helperService.getHelpers(this.sortTerm,this.searchTerm,this.service.value || [],this.org.value || [])
-      .subscribe((helpers: HelperUser[]) => {
-        this.helperUsers = helpers;
-        this.selectedHelper = this.helperUsers.length > 0 ? this.helperUsers[0] : undefined;
+      .subscribe({
+        next: (response: HelperUser[])=>{
+          this.helperUsers = response;
+          this.selectedHelper = this.helperUsers.length > 0 ? this.helperUsers[0] : undefined;
+        },
       });
       this.sortTerm = '';
-      this.searchTerm = '';
-      this.service.reset();
-      this.org.reset();
-    
+      this.searchTerm = '';  
   }
   getCount(){
     this.helperService.getCount()
@@ -66,14 +64,16 @@ export class HomeComponent implements OnInit {
   applyFilter(){
     this.getHelperUsers();
     this.showFilter = false;
+    this.hidden = false;
     
   }
   resetFilter(){
     this.service.reset();
     this.org.reset();
     this.showFilter = false;
+    this.hidden = true;
+    this.getHelperUsers();
   }
-
   ngOnInit(){
     this.getHelperUsers();
     this.getCount();

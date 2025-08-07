@@ -153,6 +153,10 @@ export class UpdateHelperComponent {
           formData.append(key, value);
         }
       });
+      console.log(this.helperForm.value);
+      formData.forEach((value, key) => {
+        console.log(`${key}:`, value);
+      });
       if(this.helperId){
         this.helperService.updateHelper(this.helperId,formData)
           .subscribe({

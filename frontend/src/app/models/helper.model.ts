@@ -10,7 +10,7 @@ export interface HelperUser {
     phone: string;
     email: string;
     vehicleType: string[];
-    kycDocument: File;
+    kycDocument: File | string;
     kycDocumentType: string;
     additionalDocuments: File;
     joinedOn: string;
