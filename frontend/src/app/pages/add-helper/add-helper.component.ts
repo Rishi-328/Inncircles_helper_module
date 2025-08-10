@@ -10,14 +10,14 @@ import { ToastService } from '../../services/toast.service';
 import { AddHelperReviewComponent } from '../../components/add-helper-review/add-helper-review.component';
 import { HelpersService } from '../../services/helpers.service';
 import { Router, RouterModule } from '@angular/router';
-import { serviceTypes,Organization,vehicleTypes,languages,iconMap } from '../../models/helper.model';
 import { MatStepperModule } from '@angular/material/stepper';
 import { SubmissionComponent } from '../../components/submission/submission.component';
+import { HelperFormComponent } from '../../components/helper-form/helper-form.component';
 
 @Component({
   selector: 'app-add-helper',
   standalone: true,
-  imports: [MatStepperModule,MaterialModule, CommonModule,KycUploadComponent,AddHelperReviewComponent,RouterModule],
+  imports: [MatStepperModule,MaterialModule, CommonModule,KycUploadComponent,AddHelperReviewComponent,RouterModule,HelperFormComponent],
   templateUrl: './add-helper.component.html',
   styleUrls: ['./add-helper.component.scss']
 })
@@ -26,17 +26,6 @@ export class AddHelperComponent implements OnInit {
   helperForm!: FormGroup;
   dialog = inject(MatDialog);
   router = inject(Router);
-
-  uploadedPhotoUrl: string | null = null;
-  selectedPhotoFile: File | null = null;
-  photoText: string = 'Upload photo (.png, .jpeg) size 5 mb';
-  serviceTypes: string[] = serviceTypes;
-  Organization: string[] = Organization;
-  vehicleTypes: string[] = vehicleTypes;
-  languages: Language[] = languages;
-  iconMap: {[key: string]: string} = iconMap;
-
-  
   constructor(private fb: FormBuilder,
     private toastService: ToastService,
     private helperService : HelpersService,
@@ -64,84 +53,11 @@ export class AddHelperComponent implements OnInit {
     });
 
   }
-
-  onPhotoSelected(event: any) {
-    const file = event.target.files[0];
-    if (file) {
-      const allowedTypes = ['image/png', 'image/jpeg'];
-      if (!allowedTypes.includes(file.type)) {
-        this.toastService.error('Invalid file type. Please upload a .png or .jpeg file.');
-        return;
-      }
-      if (file.size > 5 * 1024 * 1024) { // 5 MB
-        this.toastService.error('File size exceeds 5 MB limit.');
-        return;
-      }
-      this.selectedPhotoFile = file;
-      this.uploadedPhotoUrl = URL.createObjectURL(file);
-      this.photoText = file.name;
-      this.helperForm.patchValue({ photo: file });
-    }
-  }
-
   onFileSelected(event: Event) {
     const target = event.target as HTMLInputElement;
     if (target.files && target.files.length > 0) {
       this.helperForm.patchValue({ additionalDocuments: target.files[0] });
     }
-  }
-
-  displayText(): string {
-    const selectedValues = this.helperForm.get('languages')?.value || [];
-    
-    if (selectedValues.length === 0) {
-      return 'Select Languages';
-    }
-    
-    if (selectedValues.length === 1) {
-      const selectedLanguage = this.languages.find(lang => lang.value === selectedValues[0]);
-      return selectedLanguage?.label || '';
-    }
-    
-    const firstSelected = this.languages.find(lang => lang.value === selectedValues[0]);
-    const additionalCount = selectedValues.length - 1;
-    
-    return `${firstSelected?.label} +${additionalCount}`;
-  }
-
-  isAllSelected(): boolean {
-    const selectedValues = this.helperForm.get('languages')?.value || [];
-    return selectedValues.length === this.languages.length;
-  }
-
-  isIndeterminate(): boolean {
-    const selectedValues = this.helperForm.get('languages')?.value || [];
-    return selectedValues.length > 0 && selectedValues.length < this.languages.length;
-  }
-
-  toggleAllSelection(): void {
-    if (this.isAllSelected()) {
-      this.helperForm.patchValue({ languages: [] });
-    } else {
-      const allLanguageValues = this.languages.map(lang => lang.value);
-      this.helperForm.patchValue({ languages: allLanguageValues });
-    }
-  }
-
-  openKycDialog(): void {
-    const dialogRef = this.dialog.open(KycUploadComponent, {
-      width: '500px',
-    });   
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.helperForm.patchValue({ kycDocument: result.file});
-        this.helperForm.patchValue({ kycDocumentType: result.type });
-      }
-    });
-  }
-
-  onStepperSelectionChange(event: StepperSelectionEvent) {
-
   }
   onFormSubmit(){
     if (this.helperForm.invalid) {
@@ -182,6 +98,4 @@ export class AddHelperComponent implements OnInit {
         }
       })
   }
-
-
 }

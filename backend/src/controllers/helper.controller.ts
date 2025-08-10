@@ -48,10 +48,11 @@ export const getHelpers = async (req: Request, res: Response) => {
         const {sortBy,searchTerm,service,org} = req.body;
         let filter: any = {};
         if(searchTerm){
-          const regex = new RegExp(searchTerm,'i');
+          const safeSearch = searchTerm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+          const regex = new RegExp(safeSearch,'i');
           filter.$or = [
               {fullName: regex},
-              {employeeId: isNaN(+searchTerm) ? -1 : +searchTerm},
+              {employeeId: isNaN(+safeSearch) ? -1 : +safeSearch},
               {phone: regex}
             ]
         }
@@ -64,7 +65,7 @@ export const getHelpers = async (req: Request, res: Response) => {
         console.log(filter);
         let query = HelperModel.find(filter);
         if(sortBy){
-          query = query.sort({[sortBy]:1});
+          query = query.collation({ locale: "en", strength: 2 }).sort({[sortBy]:1});
         }
         const helpers = await query;
         console.log(helpers);
