@@ -18,7 +18,7 @@ import { FilterMultiselectComponent } from '../../shared/filter-multiselect/filt
   styleUrl: './home.component.scss'
 })
 export class HomeComponent implements OnInit {
-
+  selectedDate: Date = new Date();
   selectedHelper?: HelperUser;
   router = inject(Router);
   helperService = inject(HelpersService);
@@ -72,6 +72,10 @@ export class HomeComponent implements OnInit {
     this.org.reset();
     this.showFilter = false;
     this.hidden = true;
+    this.getHelperUsers();
+  }
+  onDateChange(event: any) {
+    this.selectedDate = event.value;
     this.getHelperUsers();
   }
   ngOnInit(){

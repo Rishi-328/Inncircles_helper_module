@@ -57,6 +57,10 @@ const helperSchema = new Schema({
     joinedOn: {
         type: String,
         default: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })
+    },
+    qrCode:{
+        type: String,
+        required: true
     }
 })
 const Helper = mongoose.model('Helper',helperSchema);

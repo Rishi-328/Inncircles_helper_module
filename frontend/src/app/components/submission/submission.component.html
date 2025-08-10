@@ -1,0 +1,50 @@
+<div class="dialog-title">
+  <div class="title">Employee ID</div>
+  <div class="close-icon">
+    <mat-icon (click)="close()">close</mat-icon>
+  </div>
+</div>
+
+<mat-dialog-content class="dialog-content">
+  <div class="front">
+    <div class="profile">
+      <img *ngIf="helper.photo" [src]="helper.photo" alt="Uploaded photo" class="uploaded-image">
+      <span *ngIf="!helper.photo" class="profile-icon">	<mat-icon>person</mat-icon></span>
+    </div>
+    <div class="info">
+      <p>{{helper.fullName}}</p>
+      <p>{{helper.typeOfService}}</p>
+      <p style="color: Rgb(226 128 70);;">#{{helper.employeeId}}</p>
+      <img [src]="helper.qrCode" alt="qr code"/>
+    </div>
+    <div class="footer">
+      {{helper.organizationName}}
+    </div>
+  </div>
+  <div class="back">
+    <div class="title">
+      <p><mat-icon>home</mat-icon>Homes</p>
+      <span>by ASBL</span>
+      
+
+    </div>
+    <div class="info">
+      <app-info-row [label]="'Organization'" [value]="helper.organizationName"></app-info-row>
+      <app-info-row [label]="'Emp ID'" [value]="helper.employeeId"></app-info-row>
+      <app-info-row [label]="'Phone Number'" [value]="helper.phone"></app-info-row>
+      <app-info-row [label]="'Joined date'" [value]="helper.joinedOn"></app-info-row>
+
+    </div>
+    <div class="qr-code">
+      <img [src]="helper.qrCode" alt="qr code"/>
+    </div>
+    <p>(Un-authorized usage of someone else's card could be considered a legal offence.)</p>
+
+
+  </div>
+    
+</mat-dialog-content>
+
+<mat-dialog-actions align="end" class="dialog-actions">
+  <button mat-flat-button color="primary" (click)="download()"><mat-icon>cloud_download</mat-icon>Download</button>
+</mat-dialog-actions>

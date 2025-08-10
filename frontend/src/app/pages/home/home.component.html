@@ -13,7 +13,7 @@
       <button mat-menu-item (click)="onSortChange('employeeId')">Employee ID</button>
     </mat-menu>
     <button matIconButton matButton="elevated" (click)="showFilter = !showFilter" class="list-icon" matBadge="1" matBadgeSize="small" [matBadgeHidden]="hidden">
-      <mat-icon>filter_list</mat-icon>
+      <mat-icon>filter_alt</mat-icon>
     </button>
     <div class="filter">
       <mat-card *ngIf="showFilter" class="filter-card">
@@ -29,11 +29,14 @@
       </div>
     </mat-card>
     </div>
-
-    <mat-form-field appearance="outline" class="search-input">
-      <mat-label>Search</mat-label>
-      <input matInput placeholder="Name, Employee ID, Phone" [(ngModel)]="searchTerm" name="search" type="search" (ngModelChange)="getHelperUsers()"/>
-    </mat-form-field>
+    <input matInput [matDatepicker]="picker" (dateChange)="onDateChange($event)" [(ngModel)]="selectedDate" hidden>
+    <mat-datepicker #picker></mat-datepicker>
+    <button matButton (click)="picker.open()" class="list-icon"> <mat-icon>event</mat-icon></button>
+    <div class="search-input">
+      <mat-icon>search</mat-icon>
+      <input matInput placeholder="Name, Employee ID, Phone" [(ngModel)]="searchTerm" name="search" type="search" (ngModelChange)="getHelperUsers()" />
+    </div>
+    
     <mat-hint>{{helperUsers.length}} of {{totalCount}} results</mat-hint>
   </div>
   <button mat-raised-button color="primary" class="add-btn" (click)="navigateToAddHelper()">+ Add Helper</button>

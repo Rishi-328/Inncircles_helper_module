@@ -3,6 +3,7 @@ import HelperModel from '../models/helper.model';
 import {getImageName }from '../utils/ExtractImageName';
 import {deleteImage, uploadImage} from '../utils/cloudinary.utils'; 
 import { getNextId } from '../utils/getNextId';
+import generateQrCode from '../utils/qrcode';
 
 export const createHelper = async (req: Request, res: Response) => {
   let cleanUpUrls: string[] = [];
@@ -28,14 +29,11 @@ export const createHelper = async (req: Request, res: Response) => {
         console.error('Error in generating employeeId: ',error);
       })
     const newHelper = new HelperModel(req.body);
+    const qrCodeUrl = await generateQrCode(newHelper.employeeId,newHelper.fullName,newHelper.typeOfService);
+    newHelper.qrCode = qrCodeUrl;
     await newHelper.save();
-      
-    res.status(201).json({
-        fullName : newHelper.fullName,
-        typeOfService: newHelper.typeOfService,
-        employeeId : newHelper.employeeId,
 
-    });
+    res.status(201).json(newHelper);
   } catch (error) {
     res.status(500).json({ message: 'Upload failed', error });
     for(const public_id of cleanUpUrls){

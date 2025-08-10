@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HelperUser } from '../models/helper.model'
 import { Observable,of } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { ResponseHelper } from '../models/response.model';
+
 
 @Injectable({
   providedIn: 'root'
@@ -15,8 +15,8 @@ export class HelpersService {
     return this.httpClient.post<HelperUser[]>(`${this.url}/getAll`,{sortBy,searchTerm,service,org});
   }
 
-  addHelper(helper: FormData): Observable<ResponseHelper>{
-    return this.httpClient.post<ResponseHelper>(`${this.url}/add`,helper);
+  addHelper(helper: FormData): Observable<HelperUser>{
+    return this.httpClient.post<HelperUser>(`${this.url}/add`,helper);
   }
 
   getCount(): Observable<{count:number}>{

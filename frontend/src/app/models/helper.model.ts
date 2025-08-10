@@ -14,6 +14,7 @@ export interface HelperUser {
     kycDocumentType: string;
     additionalDocuments: File;
     joinedOn: string;
+    qrCode?: string;
 }
 export const serviceTypes = ['Maid','Cook','Nurse','Driver'];
 export const Organization = ['ASBL', 'Springs Helpers'];

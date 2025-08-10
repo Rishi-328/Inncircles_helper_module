@@ -19,7 +19,7 @@
     <div class="upload-photo-container">
       <label for="photo-upload" class="upload-label">
         <img *ngIf="uploadedPhotoUrl" [src]="uploadedPhotoUrl" alt="Uploaded photo" class="uploaded-image">
-        <span *ngIf="!uploadedPhotoUrl" class="upload-circle">Upload Photo</span>
+        <span *ngIf="!uploadedPhotoUrl" class="upload-circle">	<mat-icon>cloud_upload</mat-icon>Upload Photo</span>
       </label>
       <p>{{photoText}}</p>
       <input id="photo-upload" type="file" (change)="onPhotoSelected($event)" hidden/>

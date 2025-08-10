@@ -15,7 +15,7 @@
     <app-divider text="EMPLOYEE ID"></app-divider>
     <div class="file-preview">
         <span class="label">Identification Card</span>
-        <a class="view-link" [href]="helper.kycDocument" target="_blank" rel="noopener noreferrer">
+        <a class="view-link" (click)="idCardOpen()" target="_blank" rel="noopener noreferrer">
             <mat-icon class="view-icon">visibility</mat-icon>
             View
         </a>

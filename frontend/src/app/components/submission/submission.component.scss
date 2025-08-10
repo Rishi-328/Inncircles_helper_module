@@ -1,0 +1,128 @@
+.dialog-title{
+  display: flex;
+  padding: 1rem;
+  .title{
+    flex-grow:1;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
+  }
+  .close-icon{
+    &:hover{
+      cursor: pointer;
+    }
+  }
+  
+}
+.dialog-content{
+  display: flex;
+  gap: 8px;
+
+ 
+  .front,.back {
+    flex: 1;
+    border: 1.5px solid Rgb(183 99 56);
+    border-radius: 8px;
+    
+
+  } 
+  .front{
+    .profile{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      mat-icon{
+        font-size: 40px;
+        width: 40px;
+        height: 40px;
+      }
+      
+    }
+    .info {
+      margin-top: 1rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      p{
+        color: black;
+        font-size: 18px;
+      }
+    }
+    .footer{
+      background-color: Rgb(226 128 70);
+      -webkit-print-color-adjust: exact;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 64px;
+    }
+
+  }
+  .back{
+    .title{
+      margin-top: 5px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      p{
+        display: flex;
+        align-items: center;
+        margin: 0;
+        color: black;
+      }
+    }
+    .info{
+      margin: 1rem 0 1rem 0;
+      background-color: Rgb(226 128 70);
+      -webkit-print-color-adjust: exact;
+      font-size: 15px;
+      padding: 10px;
+      ::ng-deep app-info-row .label {
+        font-weight: bold;
+        color: white;
+        
+      }
+
+      ::ng-deep app-info-row .value {
+        color: white;
+      }
+
+    }
+    .qr-code{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+
+    }
+    p{
+      font-size: 15px;
+      text-align: center;
+    }
+  }
+  .uploaded-image,.profile-icon{
+    object-fit: cover;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-top: 1rem;
+    display: flex;
+    border: 2px solid Rgb(226 128 70);
+    align-items: center;
+    background-color: #dddbdb;
+    -webkit-print-color-adjust: exact;
+    justify-content: center;
+    align-items: center;
+    
+
+  }
+  
+}
+@media print{
+  button,.dialog-title mat-icon{
+    display: none;
+  }
+}

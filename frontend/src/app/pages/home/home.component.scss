@@ -1,4 +1,5 @@
 .container {
+  height: 78%;
   display: flex;
   gap: 1rem;
   padding: 1rem;
@@ -10,45 +11,46 @@
     box-sizing: border-box;
   }
   .left{
-    width: 300px;
+    overflow: scroll;
+    width: 25%;
     padding: 1rem;
     box-sizing: border-box;
     border-right: 1px solid #e0e0e0;
   }
 }
 .sidebar {
+  height: 5%;
   display: flex;
   align-items: center;
   padding: 1rem;
+  
 
   .search-bar {
     display: flex;
     align-items: center;
     gap: 1rem;
     flex-grow: 1;
-
+    button{
+      gap: 1rem;
+      display: flex;
+    }
     .search-input{
-      input[type="search"]::-webkit-search-cancel-button {
-        -webkit-appearance: none;
-        height: 1em;
-        width: 1.5em;
-        border-radius: 50em;
-        background: url(https://pro.fontawesome.com/releases/v5.10.0/svgs/solid/times-circle.svg) no-repeat 50% 50%;
-        background-size: contain;
-        opacity: 0;
-        pointer-events: none;
-        }
-
-      input[type="search"]:focus::-webkit-search-cancel-button {
-        opacity: .3;
-        pointer-events: all;
-        cursor: pointer;;
-        }
-
-      input[type="search"].dark::-webkit-search-cancel-button {
-        filter: invert(1);
+      display: flex;
+      align-items: center;
+      height: 33px;
+      width: 17%;
+      gap: 0.2rem;
+      padding: 0.2rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      input{
+        width: 100%;
+        border: none;
+        outline: none;
       }
+    
    }
+   
 
     .list-icon {
       cursor: pointer;

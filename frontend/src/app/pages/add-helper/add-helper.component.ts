@@ -9,9 +9,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { ToastService } from '../../services/toast.service';
 import { AddHelperReviewComponent } from '../../components/add-helper-review/add-helper-review.component';
 import { HelpersService } from '../../services/helpers.service';
-import { Router,RouterLink, RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { serviceTypes,Organization,vehicleTypes,languages,iconMap } from '../../models/helper.model';
 import { MatStepperModule } from '@angular/material/stepper';
+import { SubmissionComponent } from '../../components/submission/submission.component';
 
 @Component({
   selector: 'app-add-helper',
@@ -24,6 +25,7 @@ export class AddHelperComponent implements OnInit {
   @ViewChild('fileInput') fileInputRef!: ElementRef<HTMLInputElement>;
   helperForm!: FormGroup;
   dialog = inject(MatDialog);
+  router = inject(Router);
 
   uploadedPhotoUrl: string | null = null;
   selectedPhotoFile: File | null = null;
@@ -38,7 +40,6 @@ export class AddHelperComponent implements OnInit {
   constructor(private fb: FormBuilder,
     private toastService: ToastService,
     private helperService : HelpersService,
-    private router : Router
     ) {}
 
   ngOnInit(): void {
@@ -151,6 +152,7 @@ export class AddHelperComponent implements OnInit {
     const formValue = this.helperForm.value;
     Object.keys(formValue).forEach(key => {
         const value = formValue[key];
+        if(value == null || value === undefined) return;
         if (Array.isArray(value)) {
           value.forEach((item, index) => {
             formData.append(`${key}[${index}]`, item);
@@ -159,12 +161,24 @@ export class AddHelperComponent implements OnInit {
           formData.append(key, value);
         }
       });
-
     this.helperService.addHelper(formData)
       .subscribe({
         next: (response)=>{
           this.toastService.success('Helper added successfully');
-          this.router.navigate(['/home']);
+          if (document.activeElement instanceof HTMLElement) {
+            document.activeElement.blur();
+          }
+          const dialogRef = this.dialog.open(SubmissionComponent,{
+            width: '600px',
+            height: '600px',
+            data:{
+              helper: response
+            }
+          })
+          dialogRef.afterClosed().subscribe(()=>{
+            this.router.navigate(['/home']);
+          })
+          
         }
       })
   }

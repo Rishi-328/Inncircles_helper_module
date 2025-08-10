@@ -9,6 +9,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DeleteHelperComponent } from '../delete-helper/delete-helper.component';
 import { HelpersService } from '../../services/helpers.service';
 import { ToastService } from '../../services/toast.service';
+import { SubmissionComponent } from '../submission/submission.component';
 @Component({
   selector: 'app-helper-detail',
   standalone: true,
@@ -27,6 +28,9 @@ export class HelperDetailComponent {
     this.router.navigate(['/update',this.helper?.employeeId]);
   }
   deleteHelper(){
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
     const dialogRef = this.dialog.open(DeleteHelperComponent, {
       data:{fullName: this.helper?.fullName, typeOfService: this.helper?.typeOfService},
     });
@@ -52,6 +56,15 @@ export class HelperDetailComponent {
       return `https://res.cloudinary.com/dg5aldure/image/upload/w_200,h_200,c_fill/helper_upload/${url.substring(url.lastIndexOf('/')+1)}`;
     }
     return '';
+  }
+  idCardOpen(){
+    const dialogRef = this.dialog.open(SubmissionComponent,{
+      width: '600px',
+      height: '600px',
+      data:{
+        helper: this.helper
+      }
+    })
   }
 
 
