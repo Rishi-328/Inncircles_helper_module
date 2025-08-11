@@ -20,27 +20,10 @@
   <mat-step [stepControl]="helperForm" [optional]="true">
     <ng-template matStepLabel>Documents</ng-template>
     <mat-card class="form-content">
-      <form [formGroup]="helperForm">
-        <div class="form-header">
-          <h2>Additional Documents</h2>
-          <p>Upload related documents. This step is optional</p>
-        </div>
-        <div class="upload-container">
-          <label for="additional-docs">
-            <div class="upload-placeholder">
-              <mat-icon class="plus-icon" color="primary">add</mat-icon>
-            </div>
-          </label>    
-          <input id="additional-docs" type="file" (change)="onFileSelected($event)" hidden/>
-          <p *ngIf="helperForm.get('additionalDocuments')?.value">{{ helperForm.get('additionalDocuments')?.value.name }}</p>
-        </div>
-        <div class="btn-container">
-          <button mat-raised-button color="primary" matStepperPrevious>Previous</button>
-          <button mat-raised-button color="primary" matStepperNext>
-            Continue
-          </button>
-        </div>
-      </form>
+      <app-additional-form
+      [helperForm]="helperForm"
+      [useCase]="'add-helper'"
+      ></app-additional-form>
     </mat-card>
   </mat-step>
   

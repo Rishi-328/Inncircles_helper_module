@@ -1,4 +1,3 @@
-import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { Component, ElementRef, inject, OnInit ,ViewChild} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MaterialModule } from '../../shared/material.module';
@@ -13,11 +12,12 @@ import { Router, RouterModule } from '@angular/router';
 import { MatStepperModule } from '@angular/material/stepper';
 import { SubmissionComponent } from '../../components/submission/submission.component';
 import { HelperFormComponent } from '../../components/helper-form/helper-form.component';
+import { AdditionalFormComponent } from '../../components/additional-form/additional-form.component';
 
 @Component({
   selector: 'app-add-helper',
   standalone: true,
-  imports: [MatStepperModule,MaterialModule, CommonModule,KycUploadComponent,AddHelperReviewComponent,RouterModule,HelperFormComponent],
+  imports: [MatStepperModule,MaterialModule, CommonModule,KycUploadComponent,AddHelperReviewComponent,RouterModule,HelperFormComponent,AdditionalFormComponent],
   templateUrl: './add-helper.component.html',
   styleUrls: ['./add-helper.component.scss']
 })
@@ -52,12 +52,6 @@ export class AddHelperComponent implements OnInit {
       joinedOn: [new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })]
     });
 
-  }
-  onFileSelected(event: Event) {
-    const target = event.target as HTMLInputElement;
-    if (target.files && target.files.length > 0) {
-      this.helperForm.patchValue({ additionalDocuments: target.files[0] });
-    }
   }
   onFormSubmit(){
     if (this.helperForm.invalid) {

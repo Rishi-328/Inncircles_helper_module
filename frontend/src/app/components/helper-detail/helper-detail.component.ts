@@ -1,4 +1,4 @@
-import { Component ,inject,Input} from '@angular/core';
+import { Component ,EventEmitter,inject,Input, Output} from '@angular/core';
 import { HelperUser } from '../../models/helper.model';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../../shared/material.module';
@@ -19,6 +19,7 @@ import { SubmissionComponent } from '../submission/submission.component';
 })
 export class HelperDetailComponent {
   @Input() helper?: HelperUser
+  @Output() deleteDone = new EventEmitter<void>();
   router: Router = inject(Router);
   helperService = inject(HelpersService);
   toastService = inject(ToastService);
@@ -40,6 +41,7 @@ export class HelperDetailComponent {
           .subscribe({
             next: (response)=>{
             this.toastService.success(response.message);
+            this.deleteDone.emit();
             },
             error: (error)=>{
               this.toastService.error('Failed to delete helper');

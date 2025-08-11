@@ -8,11 +8,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { KycUploadComponent } from '../../components/kyc-upload/kyc-upload.component';
 import { ToastService } from '../../services/toast.service';
 import { HelperFormComponent } from '../../components/helper-form/helper-form.component';
+import { AdditionalFormComponent } from '../../components/additional-form/additional-form.component';
 
 @Component({
   selector: 'app-update-helper',
   standalone: true,
-  imports: [MaterialModule, CommonModule,KycUploadComponent,RouterModule,HelperFormComponent],
+  imports: [MaterialModule, CommonModule,KycUploadComponent,RouterModule,HelperFormComponent,AdditionalFormComponent],
   templateUrl: './update-helper.component.html',
   styleUrl: './update-helper.component.scss'
 })
@@ -57,17 +58,12 @@ export class UpdateHelperComponent {
     this.activeOption = option;
     
   }
-  onFileSelected(event: Event) {
-    const target = event.target as HTMLInputElement;
-    if (target.files && target.files.length > 0) {
-      this.helperForm.patchValue({ additionalDocuments: target.files[0] });
-    }
-  }
   updateHelper() {
     const formData = new FormData();
     const formValue = this.helperForm.value;
     Object.keys(formValue).forEach(key => {
       const value = formValue[key];
+      if(value == null || value === undefined) return;
       if (Array.isArray(value)) {
         value.forEach((item, index) => {
           formData.append(`${key}[${index}]`, item);

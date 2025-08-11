@@ -1,0 +1,59 @@
+.upload-placeholder {
+    .plus-icon {
+      width: 120px;
+      height: 100px;
+      font-size: 32px;
+      border: 2px dashed Rgb(117,124,198);
+      background-color: Rgb(237, 239,251);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border-radius: 8px;
+    }
+  }
+  .file-preview {
+  display: flex;
+  align-items: center;
+  margin-top: 8px;
+  &:hover{
+    cursor: pointer;
+  }
+
+  .pdf-box {
+    background-color: #f5f5f5;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 8px 12px;
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+
+    .file-details {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+
+      .file-name {
+        font-size: 14px;
+        font-weight: 500;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .file-size {
+        font-size: 12px;
+        color: #666;
+        margin-top: 2px;
+      }
+    }
+  }
+}
+.btn-container {
+  margin-top: 2rem;
+  text-align: right;
+  display: flex;
+  gap: 2rem;
+  justify-content: flex-end;
+}

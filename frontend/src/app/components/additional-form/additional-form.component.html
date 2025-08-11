@@ -1,0 +1,35 @@
+<form [formGroup]="helperForm">
+    <div class="form-header">
+        <h2>Additional Documents</h2>
+        <p>Upload related documents. This step is optional</p>
+    </div>
+    <div class="upload-container">
+        <label for="additional-docs">
+            <div class="upload-placeholder" *ngIf="!helperForm.get('additionalDocuments')?.value">
+                <mat-icon class="plus-icon" color="primary">add</mat-icon>
+            </div>
+            <div *ngIf="helperForm.get('additionalDocuments')?.value" class="file-preview">
+                <div class="pdf-box">
+                    <mat-icon color="warn" class="pdf-icon">picture_as_pdf</mat-icon>
+                    <div class="file-details">
+                        <div class="file-name">{{ helperForm.get('additionalDocuments')?.value.name }}</div>
+                        <div class="file-size">
+                            {{ (helperForm.get('additionalDocuments')?.value.size / 1024 / 1024) | number:'1.2-2' }} MB
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </label>    
+        <input id="additional-docs" type="file" (change)="onFileSelected($event)" hidden/>
+    
+    </div>
+    <div class="btn-container" *ngIf="useCase === 'add-helper'">
+        <button mat-raised-button color="primary" matStepperPrevious>Previous</button>
+        <button mat-raised-button color="primary" matStepperNext>
+        Continue
+    </button>
+    </div>
+    <div class="btn-container" *ngIf="useCase === 'update-helper'">
+        <button mat-raised-button color="primary" (click)="updateHelper()">Save</button>
+    </div>
+</form>
