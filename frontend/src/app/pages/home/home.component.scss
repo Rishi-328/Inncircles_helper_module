@@ -48,8 +48,9 @@
         border: none;
         outline: none;
       }
-    
+     
    }
+   
    
 
     .list-icon {
@@ -91,3 +92,9 @@
   }
 }
 
+::ng-deep .mat-datepicker-content{
+  top: 120px !important;
+  left: 105px !important;
+  position: fixed !important;
+
+}

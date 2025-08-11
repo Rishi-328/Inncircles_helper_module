@@ -5,33 +5,39 @@
 </nav>
 <div class="sidebar">
   <div class="search-bar">
-    <button matIconButton [matMenuTriggerFor]="sort" class="list-icon">
-      <mat-icon>swap_vert</mat-icon>
-    </button>
-    <mat-menu #sort="matMenu">
-      <button mat-menu-item (click)="onSortChange('fullName')">Helpers Name(A-Z)</button>
-      <button mat-menu-item (click)="onSortChange('employeeId')">Employee ID</button>
-    </mat-menu>
-    <button matIconButton matButton="elevated" (click)="showFilter = !showFilter" class="list-icon" matBadge="1" matBadgeSize="small" [matBadgeHidden]="hidden">
-      <mat-icon>filter_alt</mat-icon>
-    </button>
-    <div class="filter">
-      <mat-card *ngIf="showFilter" class="filter-card">
-      <h3>Filter By</h3>
-
-      <app-filter-multiselect [label]="'Service'" [options]="serviceTypes" [control]="service" [iconMap]="iconMap"></app-filter-multiselect>
-
-      <app-filter-multiselect [label]="'Organization'" [options]="Organization" [control]="org"></app-filter-multiselect>
-
-      <div class="filter-btns">
-        <button mat-raised-button color="primary" (click)="resetFilter()">Reset</button>
-        <button mat-raised-button color="primary" (click)="applyFilter()">Apply</button>
-      </div>
-    </mat-card>
+    <div class="sort">
+      <button matIconButton [matMenuTriggerFor]="sort" class="list-icon">
+        <mat-icon>swap_vert</mat-icon>
+      </button>
+      <mat-menu #sort="matMenu">
+        <button mat-menu-item (click)="onSortChange('fullName')">Helpers Name(A-Z)</button>
+        <button mat-menu-item (click)="onSortChange('employeeId')">Employee ID</button>
+      </mat-menu>
     </div>
-    <input matInput [matDatepicker]="picker" (dateChange)="onDateChange($event)" [(ngModel)]="selectedDate" hidden>
+    <div class="filter-options">
+      <button matIconButton matButton="elevated" (click)="showFilter = !showFilter" class="list-icon" matBadge="1" matBadgeSize="small" [matBadgeHidden]="hidden">
+      <mat-icon>filter_alt</mat-icon>
+      </button>
+      <div class="filter">
+        <mat-card *ngIf="showFilter" class="filter-card">
+        <h3>Filter By</h3>
+
+        <app-filter-multiselect [label]="'Service'" [options]="serviceTypes" [control]="service" [iconMap]="iconMap"></app-filter-multiselect>
+
+        <app-filter-multiselect [label]="'Organization'" [options]="Organization" [control]="org"></app-filter-multiselect>
+
+        <div class="filter-btns">
+          <button mat-raised-button color="primary" (click)="resetFilter()">Reset</button>
+          <button mat-raised-button color="primary" (click)="applyFilter()">Apply</button>
+        </div>
+      </mat-card>
+      </div>
+    </div>
+   <div class="calender">
+     <input matInput [matDatepicker]="picker" (dateChange)="onDateChange($event)" [(ngModel)]="selectedDate" hidden>
     <mat-datepicker #picker></mat-datepicker>
     <button matButton (click)="picker.open()" class="list-icon"> <mat-icon>event</mat-icon></button>
+   </div>
     <div class="search-input">
       <mat-icon>search</mat-icon>
       <input matInput placeholder="Name, Employee ID, Phone" [(ngModel)]="searchTerm" name="search" type="search" (ngModelChange)="getHelperUsers()" />

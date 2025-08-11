@@ -12,12 +12,13 @@
     margin: 1rem;
 
   .sidebar {
-    width: 300px;
+    min-width: 300px;
     background-color: #d3d3d3;
     padding: 1rem;
     box-sizing: border-box;
     border-radius: 8px;
     position: sticky;
+    height: 90vh;
 
     button {
       display: flex;
@@ -46,7 +47,8 @@
     padding: 1rem;
     box-sizing: border-box;
     border-radius: 8px;
-    overflow-y:scroll;
+    overflow:scroll;
+    height: 90vh;
     
     .form-content {
       padding: 1.2rem;
